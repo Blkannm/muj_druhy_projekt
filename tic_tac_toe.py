@@ -73,7 +73,7 @@ board = [
     ["-","-","-"]
     ]
     
-def tic_tac_toe():
+def game():
 
     print("Welcome to Tic Tac Toe")
     print(rozdelovac)
@@ -138,6 +138,6 @@ def tic_tac_toe():
 
 if __name__ == "__main__":
     print("Nahrávání modulu..")
-    tic_tac_toe()
+    game()
 
 
