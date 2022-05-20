@@ -6,7 +6,6 @@ email: trung.le3301@gmail.com
 discord: BLKANNM#1363
 """
 
-from random import randrange
 
 def board_is_full(board):
     for row in board:
@@ -21,8 +20,45 @@ def is_free_space(space:str) -> bool:
     else:
         return False
 
-def win_condition():
-    pass
+def win_condition(current_board:list,player:str) -> bool:
+    win = None
+    # kontrola radku
+    for i in range(3):
+        win = True
+        for j in range(3):
+            if current_board[i][j] != player:
+                win = False
+        if win:
+            return True
+    # kontrola sloupcu
+    for i in range(3):
+        win = True
+        for j in range(3):
+            if current_board[j][i] != player:
+                win = False
+        if win:
+            return True
+    # kontrola Krizku
+    win = True
+    for i in range(3):
+        if current_board[i][i] != player:
+            win = False
+    if win:
+        return True
+    win = True
+    for i in range(3):
+        if current_board[i][2 - i] != player:
+            win = False
+            break
+    if win:
+        return win
+
+
+
+    else:
+        return False
+    
+    
 
 def change_of_player(hrac:str) -> str:
     if hrac == "X":
@@ -58,27 +94,45 @@ def tic_tac_toe():
     print(rozdelovac)
     player = "X"
     while True:
+        #vypis herni desky
         for radek in board:
             print(" | ".join(radek))
         
+    
         if board_is_full(board):
             print("remiza")
             break
+        print( "-"*40 ,f"Hrac '{player}' | Zadej cisla od 1 do 3:    ", "-"*40, sep="\n")
+
         #input hracu
-        rada = int(input("vyber si radek: "))
-        sloupec = int(input("vyber si sloupec: "))
+        input1 = input("vyber si radek: ")
+        input2 = input("vyber si sloupec: ")
+        if (input1.isnumeric() == False) or (input2.isnumeric() == False):
+            print("zadej cisla od 1 do 3.")
+            continue 
+        rada = int(input1)
+        sloupec = int(input2)
         if (rada < 4 and rada > 0) and (sloupec < 4 and sloupec > 0):
             #koukne se pokud je pole volne
             if is_free_space(board[rada-1][sloupec-1]) == False:
-                print("space is occupied")
+                print("mysto je zabrane!")
                 continue
 
             board[rada-1][sloupec-1] = player
-            #vymeni na 2. hrace
-            player = change_of_player(player)
         else:
-            print("out of range!!")
+            print("mimo dosah")
+            continue
 
+        #win kondice
+        if win_condition(board, player):
+            for radek in board:
+                print(" | ".join(radek))
+            print(f"Hrac '{player}' vyhral!")
+            break
+
+
+        #vymeni na 1./2. hrace
+        player = change_of_player(player)
             
     
 
