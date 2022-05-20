@@ -21,7 +21,10 @@ def is_free_space(space:str) -> bool:
     else:
         return False
 
-def change_of_player(hrac:str):
+def win_condition():
+    pass
+
+def change_of_player(hrac:str) -> str:
     if hrac == "X":
         return "O"
     if hrac == "O":
